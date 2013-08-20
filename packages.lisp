@@ -2,4 +2,4 @@
 
 (defpackage #:cl-stack-identity
   (:use #:cl #:drakma)
-  (:export #:login))
+  (:export #:login #:identurl #:make-auth-hash))
