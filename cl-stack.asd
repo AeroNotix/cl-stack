@@ -1,4 +1,4 @@
-(asdf:defsystem #:cl-stack-identity
+(asdf:defsystem #:cl-stack
   :author "Aaron France <aaron.l.france@gmail.com>"
   :description "Bindings to the OpenStack API."
   :components
