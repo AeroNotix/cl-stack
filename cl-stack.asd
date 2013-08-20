@@ -4,4 +4,4 @@
   :components
   ((:file "packages")
    (:file "identity"))
-  :depends-on (#:drakma #:com.gigamonkeys.json))
+  :depends-on (#:drakma #:yason))
