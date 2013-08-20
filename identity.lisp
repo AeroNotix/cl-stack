@@ -16,9 +16,8 @@
           (gethash "password" pass-creds) password)
     auth))
 
-(defun encode-hash (hash)
-  (with-output-to-string (*standard-output*)
-    (yason:encode hash)))
+(defun handle-api-error (code)
+  (print code))
 
 (defun login (username password tenantid)
   (let ((auth (make-auth-hash username password tenantid)))
