@@ -35,7 +35,7 @@
                          :content (encode-hash auth)
                          :content-type "application/json"
                          :additional-headers '(("Accept" . "application/json"))
-			 :want-stream T)))
+                         :want-stream T)))
 	 (body (nth 0 resp))
 	 (status-code (nth 1 resp)))
     (if (= status-code 200)
