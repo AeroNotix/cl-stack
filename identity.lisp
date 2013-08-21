@@ -7,6 +7,7 @@
 
 (defclass openstack-client ()
   ((access-token :initarg :access-token)
+   (tenantid :initarg :tenantid)
    (expires :initarg :expires)))
 
 (defun make-auth-hash (username password tenantid)
@@ -25,8 +26,9 @@
 
 (defun make-client-from-response (response)
   (make-instance 'openstack-client
-		 :access-token (drill-hash response '("access" "token" "id"))
-		 :expires (drill-hash response '("access" "token" "expires"))))
+                 :access-token (drill-hash response '("access" "token" "id"))
+                 :expires (drill-hash response '("access" "token" "expires"))
+                 :tenantid (drill-hash response '("access" "token" "tenant" "id"))))
 
 (defun login (username password tenantid)
   (let* ((auth (make-auth-hash username password tenantid))
