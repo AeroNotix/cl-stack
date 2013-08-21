@@ -19,5 +19,5 @@
          (headers (append headers req-headers)))
     (drakma:http-request url :method :POST
                              :content-type content-type
-                             :content (open filename)
+                             :content (pathname filename)
                              :additional-headers headers)))
