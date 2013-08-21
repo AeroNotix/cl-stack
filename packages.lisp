@@ -11,7 +11,8 @@
   (:use #:cl #:cl-stack-utils)
   (:export #:login
            #:openstack-client
-           #:tenantid))
+           #:tenantid
+           #:access-token))
 
 (defpackage #:cl-stack-objectstore
   (:use #:cl
