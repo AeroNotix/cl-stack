@@ -3,5 +3,7 @@
   :description "Bindings to the OpenStack API."
   :components
   ((:file "packages")
-   (:file "identity"))
-  :depends-on (#:drakma #:yason))
+   (:file "utils"       :depends-on ("packages"))
+   (:file "identity"    :depends-on ("packages" "utils"))
+   (:file "objectstore" :depends-on ("packages" "utils" "identity")))
+   :depends-on (#:drakma #:yason))
