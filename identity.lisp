@@ -41,5 +41,5 @@
 	 (body (nth 0 resp))
 	 (status-code (nth 1 resp)))
     (if (= status-code 200)
-	(make-client-from-response (yason:parse body))
-	(handle-api-error status-code))))
+        (make-client-from-response (yason:parse body))
+      (handle-api-error status-code))))
