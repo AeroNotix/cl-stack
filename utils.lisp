@@ -8,7 +8,7 @@
     (yason:encode hash)))
 
 (defun md5-digest (input)
-  (format nil "~{~2,'0x~}" input))
+  (format nil "~{~(~2,'0x~)~}" input))
 
 (defun md5-digest-file (filename)
   (md5-digest (coerce (sb-md5:md5sum-file filename) 'list)))
