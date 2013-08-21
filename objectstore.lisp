@@ -16,6 +16,9 @@
          (auth-token (slot-value client 'access-token))
          (req-headers `(("X-Auth-Token" . ,auth-token)))
          (headers (append headers req-headers)))
+    ;; TODO: this returns (or should return, you never know with
+    ;; OpenStack) the MD5 of the file in an ETag header, we should
+    ;; compare that here.
     (drakma:http-request url :method :POST
                              :content-type content-type
                              :content (pathname filename)
