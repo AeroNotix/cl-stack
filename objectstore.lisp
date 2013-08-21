@@ -7,7 +7,7 @@
 (defvar computeurl "https://region-b.geo-1.objects.hpcloudsvc.com/v1.0/")
 
 (defmethod upload-file ((client openstack-client) (filename string)
-                        &key (container "/") (content-type "application/text") headers)
+                        &key (container "") (content-type "application/text") headers)
   (let* ((md5hash (md5-digest-file filename))
          (url (format nil "~a~a~a/~a"
                       computeurl
