@@ -19,7 +19,7 @@
     ;; TODO: this returns (or should return, you never know with
     ;; OpenStack) the MD5 of the file in an ETag header, we should
     ;; compare that here.
-    (drakma:http-request url :method :POST
+    (drakma:http-request url :method :PUT
                              :content-type content-type
                              :content (pathname filename)
                              :additional-headers headers)))
