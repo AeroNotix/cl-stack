@@ -24,6 +24,5 @@
                                     :additional-headers headers)))
          (recvdheaders (nth 2 request))
          (etag (cdr (assoc :ETAG recvdheaders))))
-    (if (string= etag md5-hash)
-        t
-        nil)))
+    (string= etag md5-hash)))
+        
