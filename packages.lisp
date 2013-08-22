@@ -20,4 +20,5 @@
   (:use #:cl
         #:cl-stack-utils
         #:cl-stack-identity)
-  (:export #:upload-file))
+  (:export #:upload-file
+           #:create-directory))
