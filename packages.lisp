@@ -1,7 +1,9 @@
 (in-package :cl-user)
 
+(require :sb-md5)
+
 (defpackage #:cl-stack-utils
-  (:use #:cl)
+  (:use #:cl #:sb-md5)
   (:export #:drill-hash
            #:encode-hash
            #:md5-digest
