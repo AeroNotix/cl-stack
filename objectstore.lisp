@@ -35,7 +35,7 @@
         (string= etag md5-hash)
         status-code)))
 
-(defmethod delete-file ((client openstack-client) (filename string))
+(defmethod remove-file ((client openstack-client) (filename string))
   (let* ((url (format nil "~a~a~a"
                       computeurl
                       (slot-value client 'tenantid)

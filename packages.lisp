@@ -21,5 +21,5 @@
         #:cl-stack-utils
         #:cl-stack-identity)
   (:export #:upload-file
-           #:delete-file
+           #:remove-file
            #:create-directory))
