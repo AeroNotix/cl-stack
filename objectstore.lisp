@@ -33,6 +33,17 @@
         (string= etag md5-hash)
         status-code)))
 
+(defmethod delete-file ((client openstack-client) (filename string))
+  (let* ((url (format nil "~a~a~a"
+                      computeurl
+                      (slot-value client 'tenantid)
+                      filename))
+         (request (multiple-value-list
+                   (drakma:http-request url :method :DELETE
+                                            :additional-headers (base-headers client))))
+         (status-code (nth 1 request)))
+    (if (= status-code 204) T status-code)))
+
 (defmethod create-directory ((client openstack-client) (directory string) &key headers)
   (let* ((url (format nil "~a~a~a"
                       computeurl
