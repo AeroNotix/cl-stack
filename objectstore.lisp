@@ -2,7 +2,7 @@
 
 ;; TODO: Have this come from a configuration file to allow for
 ;; OpenStack vendor agnostic URLs.
-(defvar computeurl "https://region-b.geo-1.objects.hpcloudsvc.com/v1/")
+(defvar *computeurl* "https://region-b.geo-1.objects.hpcloudsvc.com/v1/")
 
 (defmethod base-headers ((client openstack-client) &optional (additional nil additional-p))
   "Each request has a set of basic headers which are required in each
@@ -23,7 +23,7 @@
                         &key (container "/testainer") (content-type "application/text") headers)
   "Upload file will upload `filename' into the ObjectStore."
   (let* ((url (format nil "~a~a~a/~a"
-                      computeurl
+                      *computeurl*
                       (slot-value client 'tenantid)
                       container
                       (pathname-name filename)))
@@ -44,7 +44,7 @@
 (defmethod remove-file ((client openstack-client) (filename string))
   "Remove file will remove the `filename' from the ObjectStore."
   (let* ((url (format nil "~a~a~a"
-                      computeurl
+                      *computeurl*
                       (slot-value client 'tenantid)
                       filename))
          (request (multiple-value-list
@@ -57,7 +57,7 @@
   "Create directory will create the `directory' in the ObjectStore as
   a basic container."
   (let* ((url (format nil "~a~a~a"
-                      computeurl
+                      *computeurl*
                       (slot-value client 'tenantid)
                       directory))
          (headers (base-headers client (append headers '(("Content-Length" . 0)))))
