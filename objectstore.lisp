@@ -6,10 +6,12 @@
 
 (defvar computeurl "https://region-b.geo-1.objects.hpcloudsvc.com/v1/")
 
-(defmethod base-headers ((client openstack-client) additional)
+(defmethod base-headers ((client openstack-client) &optional (additional nil additional-p))
   (let* ((auth-token (slot-value client 'access-token))
          (req-headers `(("X-Auth-Token" . ,auth-token)))
-         (headers (append additional req-headers)))
+         (headers (if additional-p
+                      (append additional req-headers)
+                      req-headers)))
     headers))
 
 (defmethod upload-file ((client openstack-client) (filename string)
