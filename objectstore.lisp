@@ -30,3 +30,15 @@
          (etag (cdr (assoc :ETAG recvdheaders))))
     (string= etag md5-hash)))
 
+(defmethod create-directory ((client openstack-client) (directory string) &key headers)
+  (let* ((url (format nil "~a~a~a"
+                      computeurl
+                      (slot-value client 'tenantid)
+                      directory))
+         (headers (base-headers client (append headers '(("Content-Length" . 0)))))
+         (request (multiple-value-list
+                   (drakma:http-request url :method :PUT
+                                            :content-type "application/directory"
+                                            :additional-headers headers)))
+         (status-code (nth 1 request)))
+    (if (= status-code 201) T status-code)))
