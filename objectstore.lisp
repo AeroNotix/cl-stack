@@ -27,8 +27,11 @@
                                             :content (pathname filename)
                                             :additional-headers headers)))
          (recvdheaders (nth 2 request))
+         (status-code (nth 1 request))
          (etag (cdr (assoc :ETAG recvdheaders))))
-    (string= etag md5-hash)))
+    (if (= status-code 201)
+        (string= etag md5-hash)
+        status-code)))
 
 (defmethod create-directory ((client openstack-client) (directory string) &key headers)
   (let* ((url (format nil "~a~a~a"
