@@ -6,6 +6,12 @@
 
 (defvar computeurl "https://region-b.geo-1.objects.hpcloudsvc.com/v1/")
 
+(defmethod base-headers ((client openstack-client) additional)
+  (let* ((auth-token (slot-value client 'access-token))
+         (req-headers `(("X-Auth-Token" . ,auth-token)))
+         (headers (append additional req-headers)))
+    headers))
+
 (defmethod upload-file ((client openstack-client) (filename string)
                         &key (container "/testainer") (content-type "application/text") headers)
   (let* ((url (format nil "~a~a~a/~a"
@@ -14,9 +20,7 @@
                       container
                       (pathname-name filename)))
          (md5-hash (md5-digest-file filename))
-         (auth-token (slot-value client 'access-token))
-         (req-headers `(("X-Auth-Token" . ,auth-token)))
-         (headers (append headers req-headers))
+         (headers (base-headers client headers))
          (request (multiple-value-list
            (drakma:http-request url :method :PUT
                                     :content-type content-type
