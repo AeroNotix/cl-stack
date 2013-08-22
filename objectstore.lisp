@@ -25,4 +25,4 @@
          (recvdheaders (nth 2 request))
          (etag (cdr (assoc :ETAG recvdheaders))))
     (string= etag md5-hash)))
-        
+
