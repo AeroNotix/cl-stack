@@ -13,13 +13,17 @@
                       (slot-value client 'tenantid)
                       container
                       (pathname-name filename)))
+         (md5-hash (md5-digest-file filename))
          (auth-token (slot-value client 'access-token))
          (req-headers `(("X-Auth-Token" . ,auth-token)))
-         (headers (append headers req-headers)))
-    ;; TODO: this returns (or should return, you never know with
-    ;; OpenStack) the MD5 of the file in an ETag header, we should
-    ;; compare that here.
-    (drakma:http-request url :method :PUT
-                             :content-type content-type
-                             :content (pathname filename)
-                             :additional-headers headers)))
+         (headers (append headers req-headers))
+         (request (multiple-value-list
+           (drakma:http-request url :method :PUT
+                                    :content-type content-type
+                                    :content (pathname filename)
+                                    :additional-headers headers)))
+         (recvdheaders (nth 2 request))
+         (etag (cdr (assoc :ETAG recvdheaders))))
+    (if (string= etag md5-hash)
+        t
+        nil)))
