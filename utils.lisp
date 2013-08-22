@@ -1,8 +1,5 @@
 (in-package :cl-stack-utils)
 
-(ql:quickload :yason)
-(ql:quickload :sb-md5)
-
 (defun encode-hash (hash)
   (with-output-to-string (*standard-output*)
     (yason:encode hash)))

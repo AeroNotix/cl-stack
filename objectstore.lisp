@@ -1,11 +1,5 @@
 (in-package :cl-stack-objectstore)
 
-(ql:quickload :drakma)
-(ql:quickload :yason)
-(ql:quickload :sb-md5) ;; TODO: Find a implementation agnostic MD5
-		       ;; library.
-
-
 ;; TODO: Have this come from a configuration file to allow for
 ;; OpenStack vendor agnostic URLs.
 (defvar computeurl "https://region-b.geo-1.objects.hpcloudsvc.com/v1/")

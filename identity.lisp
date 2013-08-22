@@ -1,8 +1,5 @@
 (in-package :cl-stack-identity)
 
-(ql:quickload :drakma)
-(ql:quickload :yason)
-
 (defvar identurl "https://region-a.geo-1.identity.hpcloudsvc.com:35357/v2.0/")
 
 (defclass openstack-client ()
