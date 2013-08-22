@@ -22,10 +22,10 @@
          (md5-hash (md5-digest-file filename))
          (headers (base-headers client headers))
          (request (multiple-value-list
-           (drakma:http-request url :method :PUT
-                                    :content-type content-type
-                                    :content (pathname filename)
-                                    :additional-headers headers)))
+                   (drakma:http-request url :method :PUT
+                                            :content-type content-type
+                                            :content (pathname filename)
+                                            :additional-headers headers)))
          (recvdheaders (nth 2 request))
          (etag (cdr (assoc :ETAG recvdheaders))))
     (string= etag md5-hash)))
