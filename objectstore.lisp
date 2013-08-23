@@ -59,6 +59,22 @@
                                            (etag (cdr (assoc :ETAG recvdheaders))))
                                        (string= etag md5-hash))))))
 
+(defmethod file-operation ((client openstack-client) filename
+                           method &key content headers
+                                    (status-code 201)
+                                    (content-type "application/json")
+                                    after-request)
+  (let* ((url (concatenate 'string
+                            *computeurl*
+                            (slot-value client 'tenantid)
+                            filename)))
+    (base-request url method
+                  :status-code status-code
+                  :content content
+                  :content-type content-type
+                  :headers headers
+                  :after-request after-request)))
+
 (defmethod remove-file ((client openstack-client) (filename string))
   "Remove file will remove the `filename' from the ObjectStore."
   (let* ((url (concatenate 'string
