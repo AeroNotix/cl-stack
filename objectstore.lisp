@@ -75,6 +75,12 @@
                   :headers headers
                   :after-request after-request)))
 
+(defmethod retrieve-file ((client openstack-client) (filename string) &key headers)
+  (file-operation client filename :headers headers))
+
+(defmethod retrieve-file-metadata ((client openstack-client) (filename string) &key headers)
+  (file-operation client filename :headers headers))
+
 (defmethod remove-file ((client openstack-client) (filename string))
   "Remove file will remove the `filename' from the ObjectStore."
   (file-operation client filename :DELETE :status-code 204 :headers (base-headers client)))
