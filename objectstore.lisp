@@ -13,7 +13,8 @@
         logging in.
       * Accept: We always accept application/json"
   (let* ((auth-token (slot-value client 'access-token))
-         (req-headers `(("X-Auth-Token" . ,auth-token)))
+         (req-headers `(("X-Auth-Token" . ,auth-token)
+                        ("Accept" . "application/json")))
          (headers (if additional-p
                       (append additional req-headers)
                       req-headers)))
