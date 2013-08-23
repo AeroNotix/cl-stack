@@ -20,4 +20,6 @@
         #:cl-stack-identity)
   (:export #:upload-file
            #:remove-file
-           #:create-directory))
+           #:create-directory
+           #:retrieve-file
+           #:retrieve-file-metadata))
