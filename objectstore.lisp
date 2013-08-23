@@ -21,20 +21,20 @@
     headers))
 
 (defun base-request (url method &key content headers
-		     (status-code 201)
-		     (content-type "application/json")
-		     (after-request nil))
+                                  (status-code 201)
+                                  (content-type "application/json")
+                                  (after-request nil))
   (let ((request nil))
     (if content
-	(setf request (multiple-value-list
-		       (drakma:http-request url :method method
-					    :content-type content-type
-					    :content content
-					    :additional-headers headers)))
-	(setf request (multiple-value-list
-		       (drakma:http-request url :method method
-					    :content-type content-type
-					    :additional-headers headers))))
+        (setf request (multiple-value-list
+                       (drakma:http-request url :method method
+                                                :content-type content-type
+                                                :content content
+                                                :additional-headers headers)))
+        (setf request (multiple-value-list
+                       (drakma:http-request url :method method
+                                                :content-type content-type
+                                                :additional-headers headers))))
     (if (= (nth 1 request) status-code)
         (if after-request
             (funcall after-request request)
@@ -56,7 +56,7 @@
                   :headers (base-headers client headers)
                   :after-request #'(lambda (request)
                                      (let* ((recvdheaders (nth 2 request))
-                                           (etag (cdr (assoc :ETAG recvdheaders))))
+                                            (etag (cdr (assoc :ETAG recvdheaders))))
                                        (string= etag md5-hash))))))
 
 (defmethod file-operation ((client openstack-client) filename
@@ -65,9 +65,9 @@
                                     (content-type "application/json")
                                     after-request)
   (let* ((url (concatenate 'string
-                            *computeurl*
-                            (slot-value client 'tenantid)
-                            filename)))
+                           *computeurl*
+                           (slot-value client 'tenantid)
+                           filename)))
     (base-request url method
                   :status-code status-code
                   :content content
@@ -77,13 +77,13 @@
 
 (defmethod retrieve-file ((client openstack-client) (filename string) &key headers)
   (file-operation client filename :GET :status-code 200 :headers (append (base-headers client) headers)
-                  :after-request #'(lambda (request)
-                                     (nth 0 request))))
+                                       :after-request #'(lambda (request)
+                                                          (nth 0 request))))
 
 (defmethod retrieve-file-metadata ((client openstack-client) (filename string) &key headers)
   (file-operation client filename :HEAD :status-code 200 :headers (append (base-headers client) headers)
-                  :after-request #'(lambda (request)
-                                     (nth 2 request))))
+                                        :after-request #'(lambda (request)
+                                                           (nth 2 request))))
 
 (defmethod remove-file ((client openstack-client) (filename string))
   "Remove file will remove the `filename' from the ObjectStore."
