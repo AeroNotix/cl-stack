@@ -23,7 +23,7 @@
 (defun base-request (url method &key content headers
 		     (status-code 201)
 		     (content-type "application/json")
-		     (after-request nil after-request-p))
+		     (after-request nil))
   (let ((request nil))
     (if content
 	(setf request (multiple-value-list
@@ -36,10 +36,10 @@
 					    :content-type content-type
 					    :additional-headers headers))))
     (if (= (nth 1 request) status-code)
-	(if after-request-p
-	    (funcall after-request request)
-	    t)
-	(nth 1 request))))
+        (if after-request
+            (funcall after-request request)
+            t)
+        (nth 1 request))))
 
 (defmethod upload-file ((client openstack-client) (filename string)
                         &key (container "/testainer") (content-type "application/text") headers)
