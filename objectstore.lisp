@@ -76,7 +76,9 @@
                   :after-request after-request)))
 
 (defmethod retrieve-file ((client openstack-client) (filename string) &key headers)
-  (file-operation client filename :headers headers))
+  (file-operation client filename :GET :status-code 200 :headers (append (base-headers client) headers)
+                  :after-request #'(lambda (request)
+                                     (nth 0 request))))
 
 (defmethod retrieve-file-metadata ((client openstack-client) (filename string) &key headers)
   (file-operation client filename :headers headers))
