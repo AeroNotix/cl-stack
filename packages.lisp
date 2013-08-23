@@ -1,7 +1,7 @@
 (in-package :cl-user)
 
 (defpackage #:cl-stack-utils
-  (:use #:cl #:sb-md5)
+  (:use #:cl #:md5)
   (:export #:drill-hash
            #:encode-hash
            #:md5-digest

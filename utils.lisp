@@ -8,7 +8,7 @@
   (format nil "~{~(~2,'0x~)~}" input))
 
 (defun md5-digest-file (filename)
-  (md5-digest (coerce (sb-md5:md5sum-file filename) 'list)))
+  (md5-digest (coerce (md5:md5sum-file filename) 'list)))
 
 (defun drill-hash (hash keys)
   (reduce #'(lambda (a b) (gethash b a)) keys :initial-value hash))
