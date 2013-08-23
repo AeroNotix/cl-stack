@@ -78,9 +78,8 @@
 (defmacro with-file-endpoint (name method number)
   `(defmethod ,name ((client openstack-client) (filename string) &key headers)
      (file-operation client filename ,method :status-code 200 :headers (append (base-headers client) headers)
-                                       :after-request #'(lambda (request)
-                                                          (nth ,number request)))))
-
+                                             :after-request #'(lambda (request)
+                                                                (nth ,number request)))))
 
 (with-file-endpoint retrieve-file :GET 0)
 (with-file-endpoint retrieve-file-metadata :HEAD 2)
