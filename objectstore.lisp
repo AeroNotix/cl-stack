@@ -81,7 +81,9 @@
                                      (nth 0 request))))
 
 (defmethod retrieve-file-metadata ((client openstack-client) (filename string) &key headers)
-  (file-operation client filename :headers headers))
+  (file-operation client filename :HEAD :status-code 200 :headers (append (base-headers client) headers)
+                  :after-request #'(lambda (request)
+                                     (nth 2 request))))
 
 (defmethod remove-file ((client openstack-client) (filename string))
   "Remove file will remove the `filename' from the ObjectStore."
