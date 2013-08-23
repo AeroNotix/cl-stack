@@ -77,18 +77,10 @@
 
 (defmethod remove-file ((client openstack-client) (filename string))
   "Remove file will remove the `filename' from the ObjectStore."
-  (let* ((url (concatenate 'string
-			   *computeurl*
-			   (slot-value client 'tenantid)
-			   filename)))
-    (base-request url :DELETE :status-code 204 :headers (base-headers client))))
+  (file-operation client filename :DELETE :status-code 204 :headers (base-headers client)))
 
 (defmethod create-directory ((client openstack-client) (directory string) &key headers)
   "Create directory will create the `directory' in the ObjectStore as
   a basic container."
-  (let* ((url (concatenate 'string
-			   *computeurl*
-			   (slot-value client 'tenantid)
-			   directory))
-         (headers (base-headers client (append headers '(("Content-Length" . 0))))))
-    (base-request url :PUT :content-type "application/directory" :headers headers)))
+  (let ((headers (base-headers client (append headers '(("Content-Length" . 0))))))
+    (file-operation client directory :PUT :content-type "application/directory" :headers headers)))
