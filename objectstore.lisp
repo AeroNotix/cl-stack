@@ -48,19 +48,15 @@
                       (slot-value client 'tenantid)
                       container
                       (pathname-name filename)))
-         (md5-hash (md5-digest-file filename))
-         (headers (base-headers client headers))
-         (request (multiple-value-list
-                   (drakma:http-request url :method :PUT
-                                            :content-type content-type
-                                            :content (pathname filename)
-                                            :additional-headers headers)))
-         (recvdheaders (nth 2 request))
-         (status-code (nth 1 request))
-         (etag (cdr (assoc :ETAG recvdheaders))))
-    (if (= status-code 201)
-        (string= etag md5-hash)
-        status-code)))
+         (md5-hash (md5-digest-file filename)))
+    (base-request url :PUT
+                  :content-type content-type
+                  :content (pathname filename)
+                  :headers (base-headers client headers)
+                  :after-request #'(lambda (request)
+                                     (let* ((recvdheaders (nth 2 request))
+                                           (etag (cdr (assoc :ETAG recvdheaders))))
+                                       (string= etag md5-hash))))))
 
 (defmethod remove-file ((client openstack-client) (filename string))
   "Remove file will remove the `filename' from the ObjectStore."
